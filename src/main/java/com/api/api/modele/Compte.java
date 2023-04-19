@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -51,8 +52,9 @@ public class Compte {
         for (int i = 0; i < 5; i++) {
             builder.append(CHARS.charAt(random.nextInt(CHARS.length())));
         }
-        builder.append(dateCreation.getYear());
-        return builder.toString();
+        String year = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        //builder.append(dateCreation.getYear());
+        return builder.toString() + year;
     }
 }
 
