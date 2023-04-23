@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 @AllArgsConstructor
+
 public class ClientServiceImpl implements ClientService{
     private final ClientRepository clientRepository;
     @Override
@@ -16,22 +17,29 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public List<Client> lire() {
+    public List<Client> liste() {
         return clientRepository.findAll();
     }
 
     @Override
     public Client modifier(Long id, Client client) {
         return clientRepository.findById(id)
-                .map(p->{
-                    //p.setComptes(client.getComptes());
-                    return clientRepository.save(p);
-                }).orElseThrow(() -> new RuntimeException("Compte non trouvé!"));
+                .map(client1 -> {
+                    client1.setNom(client.getNom());
+                    client1.setPrenom(client.getPrenom());
+                    client1.setDateNaiss(client.getDateNaiss());
+                    client1.setSexe(client.getSexe());
+                    client1.setAdresse(client.getAdresse());
+                    client1.setTelephone(client.getTelephone());
+                    client1.setCourriel(client.getCourriel());
+                    client1.setNationalite(client.getNationalite());
+                    return clientRepository.save(client1);
+                }).orElseThrow(() -> new RuntimeException("Client introuvable !"));
     }
 
     @Override
     public String supprimer(Long id) {
         clientRepository.deleteById(id);
-        return "Client supprimer";
+        return "Client supprimé ";
     }
 }

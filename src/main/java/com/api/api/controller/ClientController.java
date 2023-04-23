@@ -1,25 +1,31 @@
 package com.api.api.controller;
 
 import com.api.api.modele.Client;
-import com.api.api.modele.Compte;
 import com.api.api.service.ClientService;
-import com.api.api.service.CompteService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/client")
+@RequestMapping("/client")
 @AllArgsConstructor
 public class ClientController {
     private final ClientService clientService;
-    @PostMapping(path = "/create")
+    @PostMapping("/create")
     public Client create(@RequestBody Client client){
         return clientService.creer(client);
     }
-    @GetMapping(path = "/read")
+    @GetMapping("/read")
     public List<Client> read(){
-        return clientService.lire();
+        return clientService.liste();
+    }
+    @PutMapping("/update/{id}")
+    public Client update(@PathVariable Long id, @RequestBody Client client){
+        return clientService.modifier(id,client);
+    }
+    @DeleteMapping("/delete")
+    public String delete(@PathVariable Long id){
+        return clientService.supprimer(id);
     }
 }

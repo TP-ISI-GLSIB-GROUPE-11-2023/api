@@ -5,8 +5,8 @@ import com.api.api.modele.Client;
 import java.util.List;
 
 public interface ClientService {
-    Client creer(Client client);
-    List<Client> lire();
+    Client creer( Client client);
+    List<Client> liste();
     Client modifier(Long id, Client client);
     String supprimer(Long id);
 }
