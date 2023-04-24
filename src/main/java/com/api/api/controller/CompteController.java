@@ -30,4 +30,23 @@ public class CompteController {
         return compteService.supprimer(numero);
     }
 
+    @PostMapping(path = "/deposit/{numCompte}/{solde}")
+    public String depositAmount(@PathVariable String numCompte, @PathVariable double solde) {
+        //int initBal = getBalance(acctID);
+        return compteService.depositAmount(numCompte, solde);
+        //Logger logger = new Logger(acctID, "Deposited", "Success", initBal, initBal + amount);
+        //loggerController.addLog(logger);
+    }
+
+    @PostMapping("/{numCompte}/transfer/{destAcctID}/{amount}")
+    public String transferAmount(@PathVariable String numCompte, @PathVariable String destAcctID, @PathVariable double amount) {
+        return compteService.transferAmount(numCompte, destAcctID, amount);
+    }
+
+    @PostMapping("/{numCompte}/retrait/{amount}")
+    public String retrait(@PathVariable String numCompte, @PathVariable double amount) {
+        return compteService.retrait(numCompte, amount);
+    }
+
+
 }

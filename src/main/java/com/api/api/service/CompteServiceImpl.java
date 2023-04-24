@@ -39,4 +39,61 @@ public class CompteServiceImpl implements CompteService{
         compteRepository.deleteById(numero);
         return "Compte supprimer";
     }
+
+    @Override
+    public String depositAmount(String numCompte, double solde) {
+        compteRepository.findById(numCompte)
+                .map(p->{
+                    p.setSolde(solde);
+                    return compteRepository.save(p);
+                }).orElseThrow(() -> new RuntimeException("Compte non trouvé!"));
+        return "depot effectué";
+    }
+
+    @Override
+    public String transferAmount(String numCompte, String destAcctID, double amount) {
+        double solde = compteRepository.findById(numCompte)
+                .map(p->{
+                    p.getSolde();
+                    return p.getSolde();
+                }).orElseThrow(() -> new RuntimeException("Compte non trouvé!"));
+        if (solde > amount) {
+            compteRepository.findById(destAcctID)
+                    .map(p->{
+                        p.setSolde(p.getSolde()+amount);
+                        return compteRepository.save(p);
+                    }).orElseThrow(() -> new RuntimeException("Compte non trouvé!"));
+            compteRepository.findById(numCompte)
+                    .map(p->{
+                        p.setSolde(solde-amount);
+                        return compteRepository.save(p);
+                    }).orElseThrow(() -> new RuntimeException("Compte non trouvé!"));
+            return "transfert effectué";
+        } else {
+            return "transfert non effectué, le solde est inferieur au montant";
+        }
+
+
+    }
+
+    @Override
+    public String retrait(String numCompte, double amount) {
+        double solde = compteRepository.findById(numCompte)
+                .map(p->{
+                    p.getSolde();
+                    return p.getSolde();
+                }).orElseThrow(() -> new RuntimeException("Compte non trouvÃ©!"));
+        if (solde > amount) {
+            compteRepository.findById(numCompte)
+                    .map(p->{
+                        p.setSolde(solde-amount);
+                        return compteRepository.save(p);
+                    }).orElseThrow(() -> new RuntimeException("Compte non trouvÃ©!"));
+            return "retrait effectuÃ©";
+        } else {
+            return "retrait non effectuÃ©, le solde est inferieur au montant";
+        }
+
+
+    }
 }
