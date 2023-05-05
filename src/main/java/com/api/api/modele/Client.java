@@ -28,6 +28,7 @@ public class Client {
     private String nom;
     @Column(length = 50)
     private String prenom;
+    @Column(length = 50)
     private Date dateNaiss;
     @Column(length = 2)
     private Sexe sexe;
