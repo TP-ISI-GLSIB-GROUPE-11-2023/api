@@ -32,7 +32,7 @@ public class Client {
     private Date dateNaiss;
     @Column(length = 2)
     private Sexe sexe;
-    @Column(length = 60)
+
     private String  adresse;
     @Column(length = 20)
     private String  telephone;
